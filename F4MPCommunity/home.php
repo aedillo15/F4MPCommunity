@@ -12,43 +12,66 @@ else {
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Welcome User!</title>
     <link rel="stylesheet" href="styles/home_style.css" media="all" />
-    <!-- SENDING AJAX CHAT REQUEST START -->
-    <!--
-	<script>
-			function submitChat() {
-				if (form1.uname.value == '' || form1.msg.value == ''){
-					alert('all fields are mandatory!');
-					return;
-				}
-				var uname = form1.uname.value;
-				var msg = form1.msg.value;
-				var xmlhttp = new XMLHttpRequest();
-				
-				//prepares the xml object
-				xmlhttp.onreadystatechange = function() {
-					if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-						document.getElementById('chatlogs').innerHTML = xmlhttp.responseText;
-					}
-				}
+    <!--This part is for SearchBar Javascript-->
+    <script type="text/javascript">
+            function active(){
+                var searchBar = document.getElementById("user_query");
                 
-				xmlhttp.open('GET', 'insert.php?msg_sender='+uname+'&msg_content='+msg, true);
-				//sends username and the message to insert.php as an xml object
-				xmlhttp.send();
-			}
-			
-			$(document).ready(function(e){
-				$.ajaxSetup({
-					cache: false
-				});
-				setInterval( function(){ $('#chatlogs').load('logs.php'); }, 2000 );
-			});
-			//refreshs the <div> which is the chatlogs every 2 seconds
-		</script>
-    -->
+                if(searchBar.value=='Search...'){
+                    searchBar.value=''
+                    searchBar.placeholder='Search...'
+                }
+            }
+            function inactive(){
+                var searchBar = document.getElementById("user_query");
+                
+                if(searchBar.value==''){
+                    searchBar.value='Search...'
+                    searchBar.placeholder=''
+                }
+            } 
+        </script>
+    <!--SearchBar JS ends-->
+    <!-- SENDING AJAX CHAT REQUEST START-->
+    <script
+            src="http://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous">
+        </script>
+    <!--
+        <script>
+            function submitChat() {
+                if (form1.msg.value == ''){
+                    alert('Please enter a message!');
+                    return;
+                }
+                var msg = form1.msg.value;
+                var xmlhttp = new XMLHttpRequest();
+
+                //prepares the xml object
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                        document.getElementById('chatlogs').innerHTML = xmlhttp.responseText;
+                    }
+                }
+
+                xmlhttp.open('GET', 'chat_insert.php?msg='+msg, true);
+                //sends username and the message to insert.php as an xml object
+                xmlhttp.send();
+            }
+
+            $(document).ready(function(e){
+                $.ajaxSetup({
+                    cache: false
+                });
+                setInterval( function(){ $('#chatlogs').load('logs.php'); }, 100 );
+            });
+            //refreshs the <div> which is the chatlogs every 2 seconds
+        </script>
+-->
 </head>
 
 <body>
@@ -81,8 +104,8 @@ else {
 
                 </ul>
                 <form method="get" action="results.php" id="form1">
-                    <input type="text" name="user_query" placeholder="Search for a post title">
-                    <input type="submit" name="search" value="Search" />
+                    <input type="text" name="user_query" id="searchBar" placeholder="" value="Search..." maxlength="50" autocomplete="on" onMouseDown="active();" onBlur="inactive();"/>
+                    <input type="submit" name="search" id="searchBtn" value="Search"/>
                 </form>
             </div>
             <!-- HEADER ENDS -->
@@ -165,19 +188,33 @@ else {
         <!-- CONTENT AREA ENDS -->
         <!-- START OF CHAT BOX -->
     <body>
-		<form name="form1" method="post">
-			Name: <input type="text" name="uname" value="<?php echo $user_name?>" readonly/><br />
+        
+        <div id="chatlogs">
+                   
+        </div>
+        
+		<form name="form1" id="form" method="post">
+			Name: <input type="text" name="username" value="<?php echo $user_name?>" readonly/><br />
 			Message:
-			<input type="text" name="msg">
-			<!--<a href="#" onclick="submitChat()">Send</a><br /><br />-->
-            <input type="submit" name="send" value="Full Send">
+			<textarea name="msg_content" style="width:200px; height:70px;"></textarea>
+			<a href="#" onclick="submitChat()" name="send">Send</a><br />
+			<input name="send" type="button" value="Full Send">
         </form>
-        <?php 
-            include("chat_insert.php")
-        ?>
-			<div id="chatlogs">
-                <?php getChat();?>
-			</div>
+    <?php
+    if(isset($_POST['send']))
+    {
+        $msg_name = $_POST['username'];
+        $msg = $_POST['msg_content'];
+
+        $insert = "INSERT INTO chatlogs (`username`,`msg`) VALUES ('$msg_name','$msg')";
+        $run = mysqli_query($con,$insert);
+        if($run)
+        {
+            echo '<script>alert("A full send has occured")</script>';
+            header('Location: home.php'); 
+        }
+    }
+    ?>
         <!-- END OF CHAT BOX -->
 	</body>
         
@@ -186,7 +223,3 @@ else {
 </body>
 
 </html>
-<?php 
-
-
-?>

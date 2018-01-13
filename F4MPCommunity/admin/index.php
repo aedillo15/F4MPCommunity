@@ -23,7 +23,22 @@ else {
         </div>
         
         <div id="content">
+            <h2 style="color:green; text-align:center; padding:5px">
+            Welcome Admin: <?php echo $_SESSION['user_email'];?> Manage your community!
+            </h2>
+            <?php
+            if(isset($_GET['view_users'])){
+                include("includes/view_users.php");
+            }           
+            if(isset($_GET['view_posts'])){
+                include("includes/view_posts.php");
+            }            
+            if(isset($_GET['view_comments'])){
+                include("includes/view_comments.php");
+            }
+            ?>
         </div>
+        
         
         <div id="sidebar">
             <h2>Manage Content:</h2>
@@ -38,19 +53,7 @@ else {
             </ul>
         </div>
         
-        <div id="content">
-            <h2 style="color:green; text-align:center; padding:5px">
-            Welcome Admin: <?php echo $_SESSION['user_email'];?> Manage your community!
-            </h2>
-            <?php
-            if(isset($_GET['view_users'])){
-            include("includes/view_users.php");
-            }           
-            if(isset($_GET['view_posts'])){
-            include("includes/view_posts.php");
-            }
-            ?>
-        </div>
+
         
         <div id="foot">
             <h2 style="color:white; padding:15px; text-align:center;">Copyrights 2018 by F4MPCommunity</h2>

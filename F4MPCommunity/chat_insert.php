@@ -1,26 +1,13 @@
 <?php
 include("includes/connection.php");
-
-if(isset($_POST['send'])){
+mysqli_select_db($con, "f4community") or die ("Database not found!");  
     global $con;
+    $msg_name = $_POST['username'];
+    $msg = $_POST['msg_content'];
     
-    $msg_name ="";
-    $msg_content ="";
+    $insert = "INSERT INTO chatlogs (`username`,`msg`) VALUES ('$msg_name','$msg')";
     
-    $msg_name = $_POST['uname'];
-    $msg_content = $_POST['msg'];
-    
-    $insert = "INSERT INTO chatbox (msg_sender,msg_content) VALUES ('$msg_name','$msg_content')";
-    
-    
-    
-    $run = mysqli_query($con,$insert);
-        if($run){
-            echo "<script>alert('Message fully sent!')</script>";
-            echo "<script>window.open('home.php','_self')</script>";
-        }
-    
-}
+    mysqli_query($con,$insert);
 /*
 $con = mysqli_connect("localhost","root","") or die ("Could not connect to MySQL!");
 mysqli_select_db($con, "chatbox") or die ("Database not found!");

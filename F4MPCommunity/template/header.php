@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Artsy</title>
+    <title>F4MPCommunity - for your fallout needs</title>
     <!-- <link rel="stylesheet" href="styles/styles.css" media="all"/> -->
 </head>
 

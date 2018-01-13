@@ -2,6 +2,36 @@
     $con = mysqli_connect("localhost","root","","f4community") or die("Connection was not established");
         //TODO Create a method for creating a new topic to the topic table
         // function for getting topics
+        function insertUser()
+        {
+            if(isset($_POST['sign_up'])){
+                global $con;
+                $firstname = $_POST['user_firstname'];   
+                $lastname = $_POST['user_lastname'];   
+                $username = $_POST['user_username'];   
+                $password = $_POST['user_pass'];   
+                $email = $_POST['user_email'];   
+                $country = $_POST['user_country'];   
+                $birthday = $_POST['user_birthday'];
+                $status = "unverified";
+                $posts = "No";
+            
+                $get_email = "SELECT * FROM USERS WHERE USER_EMAIL='$email'";
+                $run_email = mysqli_query($con,$get_email);
+                $check = mysqli_num_rows($run_email);
+            
+                if($check==1)
+                {
+                    echo "<h2>This email already exists.</h2>"; 
+                    exit();
+                }
+                else
+                {
+                    $insert = "INSERT INTO users(user_fname,user_lname,user_username,user_pass,user_email,user_country,user_b_day,user_image,register_date,last_login,status,posts) VALUES ('$firstname','$lastname','$username','$password','$email','$country','$birthday',favicon.png,NOW(),NOW(),'$status','$posts')";
+                    $run = mysqli_query($con,$insert);    
+                }
+            }
+        }
         function getTopics()
         {
             // Declaring the connection, global -> accessible to the method. //
@@ -14,25 +44,18 @@
             // While the topics are being fetched.
             while($row=mysqli_fetch_array($run_topics))
             {
-            // Assigning variables to the data base columns. // 
-            $topic_id = $row['topic_id'];
-            $topic_title = $row['topic_title'];
-                
+                // Assigning variables to the data base columns. // 
+                $topic_id = $row['topic_id'];
+                $topic_title = $row['topic_title'];
+                if($_GET['topic'])
+                {
+                    $topic_id = $_GET['topic'];
+                }
             // Populating the option box with the value and the title of the topic. //
             echo "<option value='$topic_id'>$topic_title</option>";
             }
         }
-        // Function for inserting chat message on click
-        function getChat(){
-        global $con;
-        $get_chat = "SELECT * FROM chatbox";
-        $run_chat = mysqli_query($con, $get_chat);
-        while ($row = mysqli_fetch_array($run_chat)){
-            $msg_user = $row['msg_sender'];
-            $msg_content = $row['msg_content'];
-	       echo "<span class='uname'>" . $msg_user . "</span>: <span class='msg'>" . $msg_content . "</span><br>";
-        }
-        }
+
         // Function for inserting posts into the database
         function insertPost()
         {
@@ -210,12 +233,11 @@
                     //now displaying all at once
                     echo"
                     <div id='posts'>
-
-                    <p><img src='user/user_images/$user_image' width='50' height='50'></p>
-                    <h3><a href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
-                    <h3>$post_title</h3>
-                    <p>$post_date</p>
-                    <p>$content</p>
+                        <p><img src='user/user_images/$user_image' width='50' height='50'></p>
+                        <h3><a href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+                        <h3>$post_title</h3>
+                        <p>$post_date</p>
+                        <p>$content</p>
                     </div>
                     ";
                 include("comments.php"); // outside functions directory

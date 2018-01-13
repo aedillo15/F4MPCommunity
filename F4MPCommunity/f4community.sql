@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 12, 2018 at 06:20 PM
+-- Generation Time: Jan 13, 2018 at 11:02 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -45,41 +45,14 @@ INSERT INTO `admins` (`admin_id`, `admin_email`, `admin_pass`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chatbox`
+-- Table structure for table `chatlogs`
 --
 
-CREATE TABLE `chatbox` (
-  `msg_id` int(11) NOT NULL,
-  `msg_sender` varchar(255) NOT NULL,
-  `msg_content` int(11) NOT NULL
+CREATE TABLE `chatlogs` (
+  `id` int(11) NOT NULL,
+  `username` varchar(225) NOT NULL,
+  `msg` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `chatbox`
---
-
-INSERT INTO `chatbox` (`msg_id`, `msg_sender`, `msg_content`) VALUES
-(1, 'FalloutFan10', 0),
-(2, 'FalloutFan10', 0),
-(3, 'FalloutFan10', 0),
-(4, 'FalloutBest23', 0),
-(5, 'FalloutBest23', 0),
-(6, 'FalloutBest23', 0),
-(7, 'FalloutBest23', 0),
-(8, 'FalloutBoy261', 0),
-(9, 'FalloutBoy261', 0),
-(10, 'FalloutBoy261', 0),
-(11, 'FalloutBoy261', 0),
-(12, 'FalloutBoy26145', 0),
-(13, 'FalloutBoy26145', 0),
-(14, 'FalloutBoy26145', 0),
-(15, 'FalloutBoy26145', 0),
-(16, '', 0),
-(17, '', 0),
-(18, '', 0),
-(19, 'FalloutBoy261', 0),
-(20, 'FalloutBoy261', 0),
-(21, 'FalloutBoy26', 0);
 
 -- --------------------------------------------------------
 
@@ -100,7 +73,16 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `comment`, `date`) VALUES
-(11, 4, 8, 'Does this feature work? First comment ever on F4Community!', '2018-01-09');
+(11, 4, 8, 'Does this feature work? First comment ever on F4Community!', '2018-01-09'),
+(12, 5, 11, 'for debugging does this work', '2018-01-12'),
+(13, 5, 11, 'for debugging does this work', '2018-01-12'),
+(14, 5, 11, 'for debugging does this work', '2018-01-12'),
+(15, 5, 11, 'for debugging does this work', '2018-01-12'),
+(16, 3, 11, 'yo', '2018-01-12'),
+(17, 3, 11, 'yo', '2018-01-12'),
+(18, 3, 11, 'yo', '2018-01-12'),
+(19, 5, 11, 'hello', '2018-01-13'),
+(20, 5, 11, 'hello', '2018-01-13');
 
 -- --------------------------------------------------------
 
@@ -146,11 +128,10 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `user_id`, `topic_id`, `post_title`, `post_content`, `post_date`) VALUES
-(1, 11, 3, 'hello', 'This is it!yoyoy', '2018-01-12 15:57:53'),
 (2, 11, 1, 'anotherone', 'for debugging                    asdfasdf', '2018-01-12 15:57:17'),
 (3, 11, 1, 'anotheroneoij9ijrfwff', 'for debugging                    sfgsdfg', '2018-01-12 15:23:00'),
-(4, 11, 0, 'klj', '                    kljlkrob was here', '2018-01-12 15:25:31'),
-(5, 11, 3, 'klj', '                    kljlk', '2018-01-12 15:25:48');
+(5, 11, 3, 'klj', '                    kljlk', '2018-01-12 15:25:48'),
+(6, 13, 0, 'asdf', '                    asdf', '2018-01-13 21:35:07');
 
 -- --------------------------------------------------------
 
@@ -201,7 +182,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_fname`, `user_lname`, `user_username`, `user_pass`, `user_email`, `user_country`, `user_gender`, `user_b_day`, `user_image`, `register_date`, `last_login`, `status`, `posts`, `friend_array`, `user_streak`) VALUES
-(11, 'Fallout', 'Boy', 'FalloutBoy26', '12341234', '123@m.com', 'AF', '', '1996-04-13', 'default1.png', '2018-01-11', '2018-01-11', 'unverified', 'yes', '', 0);
+(11, 'Fallout', 'Boy', 'FalloutBoy2615', '12341234', '123@m.com', 'AF', '', '1996-04-13', 'bg2.jpg', '2018-01-11', '2018-01-11', 'unverified', 'yes', '', 0),
+(12, 'Fallout', 'Fan', 'FalloutFan86', '1234', '321@m.ca', 'Botswana', '', '1996-12-12', 'favicon.png', '0000-00-00', '0000-00-00', '', '', '', 0),
+(13, 'asd', 'qwe', 'FalloutRocks43', '12341234', '123@m.ca', 'AF', '', '1996-04-13', 'logo.png', '2018-01-13', '2018-01-13', 'unverified', 'No', '', 0);
 
 --
 -- Indexes for dumped tables
@@ -214,10 +197,10 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_id`);
 
 --
--- Indexes for table `chatbox`
+-- Indexes for table `chatlogs`
 --
-ALTER TABLE `chatbox`
-  ADD PRIMARY KEY (`msg_id`);
+ALTER TABLE `chatlogs`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `comments`
@@ -260,16 +243,16 @@ ALTER TABLE `admins`
   MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `chatbox`
+-- AUTO_INCREMENT for table `chatlogs`
 --
-ALTER TABLE `chatbox`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `chatlogs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `comment_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -281,7 +264,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `topics`
@@ -293,7 +276,7 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -6,50 +6,41 @@
                 </div>
             </div>
                 <div id="form2">
-                    <form action="" method="post">
+                    <form action="home.php" method="post" id="form1">
                         <h2>Sign Up Here!</h2>
                         <table>
                             <tr>
                                 <td align="right">First Name:</td>
                                 <td>
-                                    <input type="text" name="u_fname" placeholder="Enter your first name" required="required"/>
+                                    <input type="text" name="user_firstname" placeholder="Enter your first name" required="required"/>
                                 </td>
                             </tr>                            
                             <tr>
                                 <td align="right">Last Name:</td>
                                 <td>
-                                    <input type="text" name="u_lname" placeholder="Enter your last name" required="required"/>
+                                    <input type="text" name="user_lastname" placeholder="Enter your last name" required="required"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="right">Username:</td>
                                 <td>
-                                    <input type="text" name="u_username" placeholder="Enter your username" required="required"/>
+                                    <input type="text" name="user_username" placeholder="Enter your username" required="required"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="right">Password:</td>
-                                <td><input type="password" name="u_pass" placeholder="Enter your password" required="required"/>
+                                <td><input type="password" name="user_pass" placeholder="Enter your password" required="required"/>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td align="right">Confirm Password:</td>
-                                <td><input type="password" name="u_pass2" placeholder="Enter your password again to confirm" required="required" value="" /></td>
                             </tr>
                             <tr>
                                 <td align="right">Email:</td>
-                                <td><input type="email" name="u_email" placeholder="Enter your eMail" required="required"/>
+                                <td><input type="email" name="user_email" placeholder="Enter your eMail" required="required"/>
                                 </td>
                             </tr>                           
                             <tr>
-                                <td align="right">Confirm Email:</td>
-                                <td><input type="email" name="u_email2" placeholder="Confirm your eMail" required="required"/>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td align="right">Country:</td>
                                 <td>
-                                    <select name="u_country" required="required">
+                                    <select name="user_country" required="required">
                                     <?php 
                                         include("includes/country_populate.php")
                                     ?>
@@ -59,7 +50,7 @@
                             <tr>
                                 <td align="right">Birthday:</td>
                                 <td>
-                                    <input type="date" name="u_birthday" value=""/>
+                                    <input type="date" name="user_birthday" value=""/>
                                 </td>
                             </tr>
                             <tr>
@@ -67,11 +58,11 @@
                                     <button name="sign_up">Sign Up</button>
                                 </td>
                             </tr>
+                    <?php 
+                        include("user_insert.php");
+                    ?>
                         </table>
                     </form>
-                    <?php 
-                            include("user_insert.php");
-                    ?>
                 </div>
             </div>
         <! -- CONTENT ENDS -->
